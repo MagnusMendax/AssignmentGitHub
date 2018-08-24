@@ -25,7 +25,7 @@ def find(word, words, seen, target, path):
     if find(item, words, seen, target, path):
       return True
     path.pop()
-##error handling, making sure the file name is valid, if not prompting again
+
 while True:
   try:
     fname = input("Enter dictionary name: ")
@@ -34,8 +34,7 @@ while True:
   except:
     print("Please enter a valid dictionary name")
 lines = file.readlines()
-##error handling, making sure the start word given have no integers in them and will
-##prompt for another input until it recieves a valid entry
+
 while True:
   start = input("Enter start word:")
   if start.isalpha():
@@ -47,14 +46,28 @@ while True:
     break
   elif not start.isalpha():
     print("Please enter a valid start word")
-##error handling, making sure the target given have no integers in them and will
-##prompt for another input until it recieves a valid entry
+
+
 while True:
     target = input("Enter target word:")
     if target.isalpha():
       break
     elif not target.isalpha():
       print("Please enter a valid target word")
+'''
+fname = input("Enter dictionary name: ")
+file = open(fname)
+lines = file.readlines()
+while True:
+  start = input("Enter start word:")
+  words = []
+  for line in lines:
+    word = line.rstrip()
+    if len(word) == len(start):
+      words.append(word)
+  target = input("Enter target word:")
+  break
+'''
 count = 0
 path = [start]
 seen = {start : True}
