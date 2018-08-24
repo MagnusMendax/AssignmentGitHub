@@ -46,6 +46,14 @@ while True:
     break
   elif not start.isalpha():
     print("Please enter a valid start word")
+
+
+while True:
+    target = input("Enter target word:")
+    if target.isalpha():
+      break
+    elif not target.isalpha():
+      print("Please enter a valid target word")
 '''
 fname = input("Enter dictionary name: ")
 file = open(fname)
