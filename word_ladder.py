@@ -26,7 +26,14 @@ def find(word, words, seen, target, path):
       return True
     path.pop()
 
-      
+while True:
+  try:
+    fname = input("Enter dictionary name: ")
+    file = open(fname)
+    break
+  except:
+    print("Please enter a valid dictionary name")
+lines = file.readlines()
 '''
 fname = input("Enter dictionary name: ")
 file = open(fname)
