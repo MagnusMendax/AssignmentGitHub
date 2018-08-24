@@ -6,11 +6,14 @@ def build(pattern, words, seen, list):
   return [word for word in words
                  if re.search(pattern, word) and word not in seen.keys() and
                     word not in list]
-
+def findImprov(word, words, seen, target, path):
+  print(word)
+  print(target)
+'''
 def find(word, words, seen, target, path):
   list = []
   for i in range(len(word)):
-    list += build(word[:i] + "." + word[i + 1:], words, seen, list)
+    list += build(word[i:] + "." + word[i + 1:], words, seen, list)
   if len(list) == 0:
     return False
   list = sorted([(same(w, target), w) for w in list])
@@ -25,6 +28,7 @@ def find(word, words, seen, target, path):
     if find(item, words, seen, target, path):
       return True
     path.pop()
+'''
 ##error handling, making sure the file name is valid, if not prompting again
 while True:
   try:
@@ -63,4 +67,5 @@ if find(start, words, seen, target, path):
   print(len(path) - 1, path)
 else:
   print("No path found")
+findImprov(start, words, seen, target, path)
 
