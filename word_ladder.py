@@ -34,6 +34,18 @@ while True:
   except:
     print("Please enter a valid dictionary name")
 lines = file.readlines()
+
+while True:
+  start = input("Enter start word:")
+  if start.isalpha():
+    words = []
+    for line in lines:
+      word = line.rstrip()
+      if len(word) == len(start):
+        words.append(word)
+    break
+  elif not start.isalpha():
+    print("Please enter a valid start word")
 '''
 fname = input("Enter dictionary name: ")
 file = open(fname)
