@@ -1,3 +1,4 @@
+import unittest
 #changes one letter at a time give a start word, target word and list of words
 def bfs(start, target, words):
   alphabet = [chr(i) for i in range(97, 122)]
@@ -11,7 +12,6 @@ def bfs(start, target, words):
       while UserWord:
         path.insert(0, UserWord)
         UserWord = seen[UserWord]
-      print(len(path)-1)
       return path
     letters = list(UserWord)##contains [letter, letter, letter, letter]
     ##example [w, o, r, l, d] [0, 1, 2, 3, 4, 5]
@@ -31,7 +31,7 @@ while True:
     break
   except:
     print("Please enter a valid dictionary name")
-
+'''
 ##error handling, making sure the start word given have no integers in them and will
 ##prompt for another input until it recieves a valid entry
 while True:
@@ -60,4 +60,20 @@ while True:
 
 #call bfs to give the path length and path
 print(bfs(start, target, words))
+'''
+words = set([line.strip() for line in file.readlines()])
+class TestWord_Ladder(unittest.TestCase):
+    def test_bfs(self):
+        self.assertEqual(bfs("lead", "gold", words), ['lead', 'load', 'goad', 'gold'])
+        self.assertEqual(bfs("hide", "seek", words), ['hide', 'bide', 'bids', 'beds', 'bees', 'sees', 'seek'])
+        self.assertEqual(bfs("run", "fun", words), ['run', 'fun'])
+        self.assertEqual(bfs("lead", "fun", words), None)
+        self.assertIsInstance(words, set)
+
+if __name__ == '__main__':##if run this, then run the conditional code (unittest.main()), this file name is __main__,
+                          ##if imported into another file it would be word_ladder, this checks if it is imported or directly run
+    unittest.main()
+
+
+
 
