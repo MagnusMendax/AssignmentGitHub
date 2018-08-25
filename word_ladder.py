@@ -12,6 +12,7 @@ def bfs(start, target, words):
       while UserWord:
         path.insert(0, UserWord)
         UserWord = seen[UserWord]
+      print(len(path) - 1)
       return path
     letters = list(UserWord)##contains [letter, letter, letter, letter]
     ##example [w, o, r, l, d] [0, 1, 2, 3, 4, 5]
@@ -28,10 +29,30 @@ while True:
   try:
     fname = input("Enter dictionary name: ")
     file = open(fname)
+    ##place here for unit testing
     break
   except:
-    print("Please enter a valid dictionary name")
-'''
+    print("Please enter a valid dictionary.")
+
+##asks if use wants to add a dictionary of exemption words, if true then prompts for file and opens it
+##otherwise will break, also reverts back to confirmation incase of accidental input
+while True:
+  try:
+    userConfirm = input("Would you like to add a dictionary of exemption words? (y/n)")
+  except:
+    print("Please enter a valid response")
+  if userConfirm == "y":
+    try:
+      userFile = input("Enter dictionary name: ")
+      disallow = open(userFile)
+      banned = set([line.strip() for line in disallow.readlines()])
+      break
+    except:
+      print("Please enter a valid dictionary")
+  elif userConfirm == "n":
+    break
+
+
 ##error handling, making sure the start word given have no integers in them and will
 ##prompt for another input until it recieves a valid entry
 while True:
@@ -46,6 +67,7 @@ while True:
   elif not start.isalpha():
     print("Error, invalid start word. Please enter a word in lowercase")
 
+
 ##error handling, making sure the target given have no integers in them and will
 ##prompt for another input until it recieves a valid entry
 while True:
@@ -58,22 +80,37 @@ while True:
     elif not target.isalpha():
       print("Error, invalid target word. Please enter a word in lowercase")
 
-#call bfs to give the path length and path
-print(bfs(start, target, words))
+##if the user has input a banned words list remove them from words then call print bfs
+if userConfirm == "y":
+  for entry in banned:
+    if entry in words:
+      words.remove(entry)
+  print(bfs(start, target, words))
+else:
+  print(bfs(start, target, words))
+
 '''
-words = set([line.strip() for line in file.readlines()])
+#This is the unittesting portion, if wanting to test multiline comment out all while loops except for file input
+##words = set([line.strip() for line in file.readlines()]) copy this into first file request when unittesting
+##also remove the print(len(path)-1) in the bfs function
 class TestWord_Ladder(unittest.TestCase):
     def test_bfs(self):
+      if userConfirm == "n":
         self.assertEqual(bfs("lead", "gold", words), ['lead', 'load', 'goad', 'gold'])
         self.assertEqual(bfs("hide", "seek", words), ['hide', 'bide', 'bids', 'beds', 'bees', 'sees', 'seek'])
         self.assertEqual(bfs("run", "fun", words), ['run', 'fun'])
         self.assertEqual(bfs("lead", "fun", words), None)
         self.assertIsInstance(words, set)
+      elif userConfirm == "y":
+        self.assertEqual(bfs("lead", "gold", words), ['lead', 'head', 'held', 'geld', 'gold'])
+        self.assertEqual(bfs("hide", "seek", words), ['hide', 'ride', 'rede', 'redd', 'reed', 'seed', 'seek'])
+        self.assertIsInstance(banned, set)
+
 
 if __name__ == '__main__':##if run this, then run the conditional code (unittest.main()), this file name is __main__,
                           ##if imported into another file it would be word_ladder, this checks if it is imported or directly run
     unittest.main()
-
+'''
 
 
 
