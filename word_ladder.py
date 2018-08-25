@@ -99,25 +99,3 @@ if userConfirm == "y":
   print(dfs(start, target, words))
 else:
   print(dfs(start, target, words))
-'''
-#This is the unittesting portion, if wanting to test multiline comment out all while loops except for file input
-##words = set([line.strip() for line in file.readlines()]) copy this into first file request when unittesting
-##also remove the print(len(path)-1) in the dfs function
-class TestWord_Ladder(unittest.TestCase):
-    def test_dfs(self):
-      if userConfirm == "n":
-        self.assertEqual(dfs("lead", "gold", words), ['lead', 'load', 'goad', 'gold'])
-        self.assertEqual(dfs("hide", "seek", words), ['hide', 'bide', 'bids', 'beds', 'bees', 'sees', 'seek'])
-        self.assertEqual(dfs("run", "fun", words), ['run', 'fun'])
-        self.assertEqual(dfs("lead", "fun", words), None)
-        self.assertIsInstance(words, set)
-      elif userConfirm == "y":
-        self.assertEqual(dfs("lead", "gold", words), ['lead', 'head', 'held', 'geld', 'gold'])
-        self.assertEqual(dfs("hide", "seek", words), ['hide', 'ride', 'rede', 'redd', 'reed', 'seed', 'seek'])
-        self.assertIsInstance(banned, set)
-
-
-if __name__ == '__main__':##if run this, then run the conditional code (unittest.main()), this file name is __main__,
-                          ##if imported into another file it would be word_ladder, this checks if it is imported or directly run
-    unittest.main()
-'''
