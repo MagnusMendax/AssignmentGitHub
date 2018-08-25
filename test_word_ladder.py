@@ -6,11 +6,10 @@ def dfs(start, target, words):
     alphabet = [chr(i) for i in range(97, 122)]
     seen = {start: None}
     source = [start]
-    path = []
     while source:
         UserWord = source.pop(0)
         if UserWord == target:
-            path = []
+        path = []
             while UserWord:
                 path.insert(0, UserWord)
                 UserWord = seen[UserWord]
