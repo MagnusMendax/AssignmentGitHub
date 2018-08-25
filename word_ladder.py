@@ -2,12 +2,12 @@ import unittest
 
 #changes one letter at a time give a start word, target word and list of words
 def dfs(start, target, words):
-  alphabet = [chr(i) for i in range(97, 122)]
+  alphabet = [chr(i) for i in range(97, 123)]
   seen = {start: None}
   source = [start]
   while source:
     UserWord = source.pop(0)
-    path = []
+    path = [] ##the word path
     if UserWord == target:
       while UserWord:
         path.insert(0, UserWord)
@@ -23,6 +23,7 @@ def dfs(start, target, words):
         if test_word in words and test_word not in seen:##if word is in text file and not seen
           seen[test_word] = UserWord
           source.append(test_word)
+
 
 ##error handling, making sure the file name is valid, if not prompting again
 while True:
@@ -69,7 +70,7 @@ while True:
   start = input("Enter start word:")
   if start.isalpha():
     if start.islower():
-      words = set([line.strip() for line in file.readlines()]) ##strips all words in file, places them into words, mutable.
+      words = set([line.strip() for line in file.readlines()]) ##strips all words in file, places them into words.
       #can be used as list instead of set but increases search time
       break
     elif not start.islower():
@@ -98,7 +99,6 @@ if userConfirm == "y":
   print(dfs(start, target, words))
 else:
   print(dfs(start, target, words))
-
 '''
 #This is the unittesting portion, if wanting to test multiline comment out all while loops except for file input
 ##words = set([line.strip() for line in file.readlines()]) copy this into first file request when unittesting

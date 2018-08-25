@@ -8,8 +8,8 @@ def dfs(start, target, words):
     source = [start]
     while source:
         UserWord = source.pop(0)
-        if UserWord == target:
         path = []
+        if UserWord == target:
             while UserWord:
                 path.insert(0, UserWord)
                 UserWord = seen[UserWord]
@@ -54,17 +54,24 @@ while True:
         break
 
 ##if the user has input a banned words list remove them from words then call print dfs
-if userConfirm == "y":
-    for entry in banned:
-        if entry in words:
-            words.remove(entry)
-
+def wordRemove(userConfirm):
+    if userConfirm == "y":
+        for entry in banned:
+            if entry in words:
+                words.remove(entry)
+        return True
+wordRemove(userConfirm)
 
 
 # This is the unittesting portion, if wanting to test multiline comment out all while loops except for file input
 ##words = set([line.strip() for line in file.readlines()]) copy this into first file request when unittesting
 ##also remove the print(len(path)-1) in the dfs function
 class TestWord_Ladder(unittest.TestCase):
+    def test_wordRemove(self):
+        if wordRemove == "y":
+            self.assertEqual(wordRemove("y"), True)
+        elif wordRemove == "n":
+            self.assertEqual(wordRemove("y"), True)
     def test_dfs(self):
         if userConfirm == "n":
             self.assertEqual(dfs("lead", "gold", words), ['lead', 'load', 'goad', 'gold'])
