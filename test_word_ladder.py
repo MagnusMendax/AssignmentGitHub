@@ -2,7 +2,7 @@ import unittest
 
 
 # changes one letter at a time give a start word, target word and list of words
-def bfs(start, target, words):
+def dfs(start, target, words):
     alphabet = [chr(i) for i in range(97, 122)]
     seen = {start: None}
     source = [start]
@@ -54,7 +54,7 @@ while True:
     elif userConfirm == "n":
         break
 
-##if the user has input a banned words list remove them from words then call print bfs
+##if the user has input a banned words list remove them from words then call print dfs
 if userConfirm == "y":
     for entry in banned:
         if entry in words:
@@ -64,18 +64,18 @@ if userConfirm == "y":
 
 # This is the unittesting portion, if wanting to test multiline comment out all while loops except for file input
 ##words = set([line.strip() for line in file.readlines()]) copy this into first file request when unittesting
-##also remove the print(len(path)-1) in the bfs function
+##also remove the print(len(path)-1) in the dfs function
 class TestWord_Ladder(unittest.TestCase):
-    def test_bfs(self):
+    def test_dfs(self):
         if userConfirm == "n":
-            self.assertEqual(bfs("lead", "gold", words), ['lead', 'load', 'goad', 'gold'])
-            self.assertEqual(bfs("hide", "seek", words), ['hide', 'bide', 'bids', 'beds', 'bees', 'sees', 'seek'])
-            self.assertEqual(bfs("run", "fun", words), ['run', 'fun'])
-            self.assertEqual(bfs("lead", "fun", words), None)
+            self.assertEqual(dfs("lead", "gold", words), ['lead', 'load', 'goad', 'gold'])
+            self.assertEqual(dfs("hide", "seek", words), ['hide', 'bide', 'bids', 'beds', 'bees', 'sees', 'seek'])
+            self.assertEqual(dfs("run", "fun", words), ['run', 'fun'])
+            self.assertEqual(dfs("lead", "fun", words), None)
             self.assertIsInstance(words, set)
         elif userConfirm == "y":
-            self.assertEqual(bfs("lead", "gold", words), ['lead', 'head', 'held', 'geld', 'gold'])
-            self.assertEqual(bfs("hide", "seek", words), ['hide', 'ride', 'rede', 'redd', 'reed', 'seed', 'seek'])
+            self.assertEqual(dfs("lead", "gold", words), ['lead', 'head', 'held', 'geld', 'gold'])
+            self.assertEqual(dfs("hide", "seek", words), ['hide', 'ride', 'rede', 'redd', 'reed', 'seed', 'seek'])
             self.assertIsInstance(banned, set)
 if __name__ == '__main__':  ##if run this, then run the conditional code (unittest.main()), this file name is __main__,
     ##if imported into another file it would be word_ladder, this checks if it is imported or directly run
