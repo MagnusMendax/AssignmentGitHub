@@ -1,4 +1,5 @@
 import unittest
+
 #changes one letter at a time give a start word, target word and list of words
 def bfs(start, target, words):
   alphabet = [chr(i) for i in range(97, 122)]
@@ -12,7 +13,7 @@ def bfs(start, target, words):
       while UserWord:
         path.insert(0, UserWord)
         UserWord = seen[UserWord]
-      #print(len(path) - 1)
+      print(len(path) - 1)
       return path
     letters = list(UserWord)##contains [letter, letter, letter, letter]
     ##example [w, o, r, l, d] [0, 1, 2, 3, 4, 5]
@@ -29,7 +30,7 @@ while True:
   try:
     fname = input("Enter dictionary name: ")
     file = open(fname)
-    words = set([line.strip() for line in file.readlines()])##place here for unit testing
+    ##place word strip here for unit testing
     break
   except:
     print("Please enter a valid dictionary.")
@@ -52,7 +53,17 @@ while True:
   elif userConfirm == "n":
     break
 
-'''
+##has no application as file already finds shortest path
+while True:
+  try:
+    shortPath = input("Would you like to receive the shortest path from start word to target word? (y/n) ")
+    if shortPath == "y":
+      break
+    elif shortPath =="n":
+      break
+  except:
+    print("Please enter a valid response")
+
 ##error handling, making sure the start word given have no integers in them and will
 ##prompt for another input until it recieves a valid entry
 while True:
@@ -79,18 +90,17 @@ while True:
         print("Error, invalid target word. Please enter a word in lowercase.")
     elif not target.isalpha():
       print("Error, invalid target word. Please enter a word in lowercase")
-'''
+
 ##if the user has input a banned words list remove them from words then call print bfs
 if userConfirm == "y":
   for entry in banned:
     if entry in words:
       words.remove(entry)
-'''
   print(bfs(start, target, words))
 else:
   print(bfs(start, target, words))
-'''
 
+'''
 #This is the unittesting portion, if wanting to test multiline comment out all while loops except for file input
 ##words = set([line.strip() for line in file.readlines()]) copy this into first file request when unittesting
 ##also remove the print(len(path)-1) in the bfs function
@@ -111,7 +121,4 @@ class TestWord_Ladder(unittest.TestCase):
 if __name__ == '__main__':##if run this, then run the conditional code (unittest.main()), this file name is __main__,
                           ##if imported into another file it would be word_ladder, this checks if it is imported or directly run
     unittest.main()
-
-
-
-
+'''
