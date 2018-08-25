@@ -1,34 +1,28 @@
-import re
-def same(item, target):
-  return len([c for (c, t) in zip(item, target) if c == t])
+#changes one letter at a time give a start word, target word and list of words
+def bfs(start, target, words):
+  alphabet = [chr(i) for i in range(97, 122)]
+  seen = {start: None}
+  source = [start]
+  path = []
+  while source:
+    UserWord = source.pop(0)
+    if UserWord == target:
+      path = []
+      while UserWord:
+        path.insert(0, UserWord)
+        UserWord = seen[UserWord]
+      print(len(path)-1)
+      return path
+    letters = list(UserWord)##contains [letter, letter, letter, letter]
+    ##example [w, o, r, l, d] [0, 1, 2, 3, 4, 5]
+    for unit, place in enumerate(letters):
+      path.append(place)
+      for letter in alphabet:##checks if any of the letters in the word are in the list alphabet
+        test_word = "".join(letters[:unit]) +letter + "".join(letters[unit+1:])
+        if test_word in words and test_word not in seen:##if word is in text file and not seen
+          seen[test_word] = UserWord
+          source.append(test_word)
 
-def build(pattern, words, seen, list):
-  return [word for word in words
-                 if re.search(pattern, word) and word not in seen.keys() and
-                    word not in list]
-def findImprov(word, words, seen, target, path):
-  print(word)
-  print(target)
-'''
-def find(word, words, seen, target, path):
-  list = []
-  for i in range(len(word)):
-    list += build(word[i:] + "." + word[i + 1:], words, seen, list)
-  if len(list) == 0:
-    return False
-  list = sorted([(same(w, target), w) for w in list])
-  for (match, item) in list:
-    if match >= len(target) - 1:
-      if match == len(target) - 1:
-        path.append(item)
-      return True
-    seen[item] = True
-  for (match, item) in list:
-    path.append(item)
-    if find(item, words, seen, target, path):
-      return True
-    path.pop()
-'''
 ##error handling, making sure the file name is valid, if not prompting again
 while True:
   try:
@@ -37,35 +31,33 @@ while True:
     break
   except:
     print("Please enter a valid dictionary name")
-lines = file.readlines()
+
 ##error handling, making sure the start word given have no integers in them and will
 ##prompt for another input until it recieves a valid entry
 while True:
   start = input("Enter start word:")
   if start.isalpha():
-    words = []
-    for line in lines:
-      word = line.rstrip()
-      if len(word) == len(start):
-        words.append(word)
-    break
+    if start.islower():
+      words = set([line.strip() for line in file.readlines()]) ##strips all words in file, places them into words, mutable.
+      #can be used as list instead of set but increases search time
+      break
+    elif not start.islower():
+      print("Error, invalid start word. Please enter a word in lowercase")
   elif not start.isalpha():
-    print("Please enter a valid start word")
+    print("Error, invalid start word. Please enter a word in lowercase")
+
 ##error handling, making sure the target given have no integers in them and will
 ##prompt for another input until it recieves a valid entry
 while True:
     target = input("Enter target word:")
     if target.isalpha():
-      break
+      if target.islower():
+        break
+      elif not target.islower():
+        print("Error, invalid target word. Please enter a word in lowercase.")
     elif not target.isalpha():
-      print("Please enter a valid target word")
-count = 0
-path = [start]
-seen = {start : True}
-if find(start, words, seen, target, path):
-  path.append(target)
-  print(len(path) - 1, path)
-else:
-  print("No path found")
-findImprov(start, words, seen, target, path)
+      print("Error, invalid target word. Please enter a word in lowercase")
+
+#call bfs to give the path length and path
+print(bfs(start, target, words))
 
